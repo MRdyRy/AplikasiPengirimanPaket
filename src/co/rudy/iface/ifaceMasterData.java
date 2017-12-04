@@ -16,5 +16,5 @@ import java.util.List;
  */
 public interface ifaceMasterData {
     public List<MasterDataModel> getAllDataPaket();
-    public Tarif[] getAllDataTarif();
+    public List<MasterDataModel> getAllDataTarif();
 }

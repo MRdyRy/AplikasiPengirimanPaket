@@ -37,27 +37,22 @@ public class MasterDataModel{
     public MasterDataModel() {
     }
 
-    public MasterDataModel(String namaPengirim, String alamatPengirim, String kotapengirim, String provinsiPengirim, String telpPengirim, String namaPenerima, String alamatPenerima, String kotaPenerima, String provinsiPenerima, String telpPenerima, String noPaket, String jenisbrg, String beratBarang, String tglKirim, String dimensiPaket, String hargaBarang, String pembayaran, String jenisLayanan, String asuransi, String totalHarga) {
+    public MasterDataModel(String namaPengirim, String alamatPengirim, String telpPengirim, String namaPenerima, String alamatPenerima,String telpPenerima, String noPaket, String tglKirim, String beratBarang, String jenisLayanan, String asuransi, String jenisbrg, String totalHarga) {
         this.namaPengirim = namaPengirim;
         this.alamatPengirim = alamatPengirim;
-        this.kotapengirim = kotapengirim;
-        this.provinsiPengirim = provinsiPengirim;
         this.telpPengirim = telpPengirim;
         this.namaPenerima = namaPenerima;
         this.alamatPenerima = alamatPenerima;
-        this.kotaPenerima = kotaPenerima;
-        this.provinsiPenerima = provinsiPenerima;
         this.telpPenerima = telpPenerima;
         this.noPaket = noPaket;
-        this.jenisbrg = jenisbrg;
-        this.beratBarang = beratBarang;
         this.tglKirim = tglKirim;
-        this.dimensiPaket = dimensiPaket;
-        this.hargaBarang = hargaBarang;
-        this.pembayaran = pembayaran;
+        this.beratBarang = beratBarang;
         this.jenisLayanan = jenisLayanan;
         this.asuransi = asuransi;
+        this.jenisbrg = jenisbrg;
         this.totalHarga = totalHarga;
+        
+        
     }
 
     
@@ -340,4 +335,120 @@ public class MasterDataModel{
     public void setTotalHarga(String totalHarga) {
         this.totalHarga = totalHarga;
     }
+
+    /**
+     * @return the provinsi
+     */
+    public String getProvinsi() {
+        return provinsi;
+    }
+
+    /**
+     * @param provinsi the provinsi to set
+     */
+    public void setProvinsi(String provinsi) {
+        this.provinsi = provinsi;
+    }
+
+    /**
+     * @return the kota
+     */
+    public String getKota() {
+        return kota;
+    }
+
+    /**
+     * @param kota the kota to set
+     */
+    public void setKota(String kota) {
+        this.kota = kota;
+    }
+
+    /**
+     * @return the reguler
+     */
+    public String getReguler() {
+        return reguler;
+    }
+
+    /**
+     * @param reguler the reguler to set
+     */
+    public void setReguler(String reguler) {
+        this.reguler = reguler;
+    }
+
+    /**
+     * @return the kilat
+     */
+    public String getKilat() {
+        return kilat;
+    }
+
+    /**
+     * @param kilat the kilat to set
+     */
+    public void setKilat(String kilat) {
+        this.kilat = kilat;
+    }
+
+    /**
+     * @return the sds
+     */
+    public String getSds() {
+        return sds;
+    }
+
+    /**
+     * @param sds the sds to set
+     */
+    public void setSds(String sds) {
+        this.sds = sds;
+    }
+
+    /**
+     * @return the ons
+     */
+    public String getOns() {
+        return ons;
+    }
+
+    /**
+     * @param ons the ons to set
+     */
+    public void setOns(String ons) {
+        this.ons = ons;
+    }
+
+    /**
+     * @return the hds
+     */
+    public String getHds() {
+        return hds;
+    }
+
+    /**
+     * @param hds the hds to set
+     */
+    public void setHds(String hds) {
+        this.hds = hds;
+    }
+    private String provinsi;
+    private String kota;
+    private String reguler;
+    private String kilat;
+    private String sds;
+    private String ons;
+    private String hds;
+    
+    public MasterDataModel(String provinsi, String kota,String reguler,String kilat,String sds,String ons,String hds) {
+        this.provinsi=provinsi;
+        this.kota=kota;
+        this.reguler=reguler;
+        this.kilat=kilat;
+        this.sds=sds;
+        this.ons=ons;
+        this.hds=hds;
+    }
+
 }

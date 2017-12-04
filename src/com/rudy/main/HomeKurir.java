@@ -7,12 +7,16 @@ package com.rudy.main;
 import com.rudy.dao.*;
 import com.rudy.model.*;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -25,12 +29,15 @@ public class HomeKurir extends javax.swing.JFrame {
     DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance();
     NumberFormat nf = NumberFormat.getInstance();
     private PenerimaDao penerimadao;
+    List<MasterDataModel> mstPaket;
+    List<MasterDataModel> mstTarif;
     Penerima penerima;
     Pengirim pengirim;
     List<String> all;
     Tarif[] obj;
     Tarif trfs;
     Paket paket;
+    MasterDataModel md;
 
     /**
      * Creates new form HomeKurir
@@ -38,6 +45,7 @@ public class HomeKurir extends javax.swing.JFrame {
     public HomeKurir() {
         all = new TarifDao().getLineData();
         obj = new TarifDao().getAllTarif();
+
         initComponents();
         setTitle("Aplikasi Kurir Versi 1.0 rudy");
         setLocationRelativeTo(this);
@@ -180,6 +188,13 @@ public class HomeKurir extends javax.swing.JFrame {
         jPanel17 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jButton3 = new javax.swing.JButton();
+        panelMasterPaket = new javax.swing.JDialog();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel34 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        tabelMasterPaket = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         labelTanggal = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -1274,8 +1289,9 @@ public class HomeKurir extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        panelMasterTarif.setMinimumSize(new java.awt.Dimension(650, 450));
-        panelMasterTarif.setPreferredSize(new java.awt.Dimension(650, 450));
+        panelMasterTarif.setTitle("[MASTER DATA TARIF]");
+        panelMasterTarif.setMinimumSize(new java.awt.Dimension(690, 450));
+        panelMasterTarif.setPreferredSize(new java.awt.Dimension(690, 450));
 
         jPanel16.setBackground(new java.awt.Color(153, 0, 51));
 
@@ -1315,6 +1331,13 @@ public class HomeKurir extends javax.swing.JFrame {
         ));
         jScrollPane4.setViewportView(jTable1);
 
+        jButton3.setText("Tambah Data");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
         jPanel17.setLayout(jPanel17Layout);
         jPanel17Layout.setHorizontalGroup(
@@ -1323,12 +1346,18 @@ public class HomeKurir extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 606, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(jButton3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1350,6 +1379,85 @@ public class HomeKurir extends javax.swing.JFrame {
                 .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        panelMasterPaket.setMinimumSize(new java.awt.Dimension(900, 500));
+        panelMasterPaket.setPreferredSize(new java.awt.Dimension(900, 500));
+
+        jPanel18.setBackground(new java.awt.Color(0, 153, 153));
+
+        jLabel34.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setText("[Master Data Paket]");
+
+        javax.swing.GroupLayout jPanel18Layout = new javax.swing.GroupLayout(jPanel18);
+        jPanel18.setLayout(jPanel18Layout);
+        jPanel18Layout.setHorizontalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel18Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel34)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel18Layout.setVerticalGroup(
+            jPanel18Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel18Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel34)
+                .addContainerGap())
+        );
+
+        jPanel19.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        tabelMasterPaket.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane6.setViewportView(tabelMasterPaket);
+
+        javax.swing.GroupLayout jPanel19Layout = new javax.swing.GroupLayout(jPanel19);
+        jPanel19.setLayout(jPanel19Layout);
+        jPanel19Layout.setHorizontalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 656, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel19Layout.setVerticalGroup(
+            jPanel19Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel19Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout panelMasterPaketLayout = new javax.swing.GroupLayout(panelMasterPaket.getContentPane());
+        panelMasterPaket.getContentPane().setLayout(panelMasterPaketLayout);
+        panelMasterPaketLayout.setHorizontalGroup(
+            panelMasterPaketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMasterPaketLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelMasterPaketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelMasterPaketLayout.setVerticalGroup(
+            panelMasterPaketLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelMasterPaketLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1603,49 +1711,53 @@ public class HomeKurir extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHargaBarangKeyTyped
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
-        String nomorPaket = txtNomorPaket.getText().trim();
-        String jenisBarang = cbJenisBarang.getSelectedItem().toString();
-        double beratBarang = Double.valueOf(txtBeratBarang.getText());
-        Date tglKirim = dateTglKirim.getDate();
-        String dimensiBrg = txtPanjangDimensi + " x " + txtLebarDimensi + " x " + txtTinggiDimensi;
-        //pisahin hapus "," dari value
-        
-        String pembayaran = "";
-        if (btngrpBayar.isSelected(ckCash.getModel())) {
-            pembayaran = ckCash.getActionCommand();
-        } else if (btngrpBayar.isSelected(ckDebit.getModel())) {
-            pembayaran = ckDebit.getActionCommand();
-        } else if (btngrpBayar.isSelected(ckCC.getModel())) {
-            pembayaran = ckCC.getActionCommand();
-        }
-        asuransi = btngrpAsuransi.isSelected(asYa.getModel()) ? asYa.getActionCommand() : asNo.getActionCommand();
-        
-        if(!txtHargaBarang.getText().isEmpty()){
-            String[] data = txtHargaBarang.getText().split(",");
-            //gabungin value
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < data.length; i++) {
-                sb.append(data[i]);
+        try {
+            String nomorPaket = txtNomorPaket.getText().trim();
+            String jenisBarang = cbJenisBarang.getSelectedItem().toString();
+            double beratBarang = Double.valueOf(txtBeratBarang.getText());
+            Date tglKirim = dateTglKirim.getDate();
+            String dimensiBrg = txtPanjangDimensi + " x " + txtLebarDimensi + " x " + txtTinggiDimensi;
+            //pisahin hapus "," dari value
+            
+            String pembayaran = "";
+            if (btngrpBayar.isSelected(ckCash.getModel())) {
+                pembayaran = ckCash.getActionCommand();
+            } else if (btngrpBayar.isSelected(ckDebit.getModel())) {
+                pembayaran = ckDebit.getActionCommand();
+            } else if (btngrpBayar.isSelected(ckCC.getModel())) {
+                pembayaran = ckCC.getActionCommand();
             }
-            hargaBarang = Double.valueOf(sb.toString());
+            asuransi = btngrpAsuransi.isSelected(asYa.getModel()) ? asYa.getActionCommand() : asNo.getActionCommand();
+            
+            if (!txtHargaBarang.getText().isEmpty()) {
+                String[] data = txtHargaBarang.getText().split(",");
+                //gabungin value
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < data.length; i++) {
+                    sb.append(data[i]);
+                }
+                hargaBarang = Double.valueOf(sb.toString());
+            }
+            String jenisLayanan = cbJenisLayanan.getSelectedItem().toString();
+            double biayapaket = 0.0;
+            if (jenisLayanan.equalsIgnoreCase("reguler")) {
+                biayapaket = trfs.getTarifReguler();
+            } else if (jenisLayanan.equalsIgnoreCase("sds")) {
+                biayapaket = trfs.getTarifSds();
+            } else if (jenisLayanan.equalsIgnoreCase("kilat")) {
+                biayapaket = trfs.getTarifKilat();
+            } else if (jenisLayanan.equalsIgnoreCase("hds")) {
+                biayapaket = trfs.getTarifHds();
+            } else if (jenisLayanan.equalsIgnoreCase("ons")) {
+                biayapaket = trfs.getTarifOns();
+            }
+            
+            paket = new PaketDao().kirimPaket(pengirim, penerima, tglKirim, nomorPaket, jenisBarang, beratBarang, dimensiBrg, hargaBarang, jenisLayanan, asuransi, pembayaran, biayapaket);
+            setDisable();
+            cetakNota();
+        } catch (IOException ex) {
+            Logger.getLogger(HomeKurir.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String jenisLayanan = cbJenisLayanan.getSelectedItem().toString();
-        double biayapaket = 0.0;
-        if (jenisLayanan.equalsIgnoreCase("reguler")) {
-            biayapaket = trfs.getTarifReguler();
-        } else if (jenisLayanan.equalsIgnoreCase("sds")) {
-            biayapaket = trfs.getTarifSds();
-        } else if (jenisLayanan.equalsIgnoreCase("kilat")) {
-            biayapaket = trfs.getTarifKilat();
-        } else if (jenisLayanan.equalsIgnoreCase("hds")) {
-            biayapaket = trfs.getTarifHds();
-        } else if (jenisLayanan.equalsIgnoreCase("ons")) {
-            biayapaket = trfs.getTarifOns();
-        }
-
-        paket = new PaketDao().kirimPaket(pengirim, penerima, tglKirim, nomorPaket, jenisBarang, beratBarang, dimensiBrg, hargaBarang, jenisLayanan, asuransi, pembayaran, biayapaket);
-        setDisable();
-        cetakNota();
     }//GEN-LAST:event_btnSubmitActionPerformed
 
     private void btnNewDataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewDataActionPerformed
@@ -1700,27 +1812,42 @@ public class HomeKurir extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCloseActionPerformed
 
     private void asYaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asYaActionPerformed
-        asuransi = btngrpAsuransi.isSelected(asYa.getModel())? asYa.getActionCommand() : asNo.getActionCommand();
+        asuransi = btngrpAsuransi.isSelected(asYa.getModel()) ? asYa.getActionCommand() : asNo.getActionCommand();
         if (asuransi.equalsIgnoreCase("ya")) {
             txtHargaBarang.setEnabled(true);
         }
     }//GEN-LAST:event_asYaActionPerformed
 
     private void asNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_asNoActionPerformed
-        asuransi = btngrpAsuransi.isSelected(asYa.getModel())? asYa.getActionCommand() : asNo.getActionCommand();
+        asuransi = btngrpAsuransi.isSelected(asYa.getModel()) ? asYa.getActionCommand() : asNo.getActionCommand();
         if (asuransi.equalsIgnoreCase("tidak")) {
             txtHargaBarang.setEnabled(false);
         }
     }//GEN-LAST:event_asNoActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        // TODO add your handling code here:
+        showMasterDataPaket();
+        panelMasterPaket.setVisible(true);
+        panelMasterPaket.setLocationRelativeTo(this);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        panelMasterTarif.setVisible(true);
-        panelMasterTarif.setLocationRelativeTo(this);
+        showMasterDataTarif();
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        String provinsi,kota;
+        double reguler,kilat,sds,ons,hds;
+        provinsi = JOptionPane.showInputDialog(null,"Masukan Provinsi");
+        kota = JOptionPane.showInputDialog(null,"Masukan Kota ");
+        reguler = Double.parseDouble(JOptionPane.showInputDialog(null,"Masukan Tarif Reguler"));
+        kilat = Double.parseDouble(JOptionPane.showInputDialog(null,"Masukan Tarif Kilat"));
+        sds = Double.parseDouble(JOptionPane.showInputDialog(null,"Masukan Tarif SDS"));
+        ons = Double.parseDouble(JOptionPane.showInputDialog(null,"Masukan Tarif Ons"));
+        hds = Double.parseDouble(JOptionPane.showInputDialog(null,"Masukan Tarif HDS"));
+        Tarif tarifss = new MasterDao().createMasterTarif(provinsi, kota, reguler, kilat, sds, ons, hds);
+        showMasterDataTarif();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1802,6 +1929,7 @@ public class HomeKurir extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateTglKirim;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1830,6 +1958,7 @@ public class HomeKurir extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
     private javax.swing.JLabel jLabel42;
@@ -1862,6 +1991,8 @@ public class HomeKurir extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
+    private javax.swing.JPanel jPanel18;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1875,6 +2006,7 @@ public class HomeKurir extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
@@ -1882,7 +2014,9 @@ public class HomeKurir extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTanggal;
     private javax.swing.JDialog panelCetak;
+    private javax.swing.JDialog panelMasterPaket;
     private javax.swing.JDialog panelMasterTarif;
+    private javax.swing.JTable tabelMasterPaket;
     private javax.swing.JTextArea txtAlamatPenerima;
     private javax.swing.JTextArea txtAlamatPengirim;
     private javax.swing.JTextField txtBeratBarang;
@@ -1899,7 +2033,9 @@ public class HomeKurir extends javax.swing.JFrame {
     private javax.swing.JTextField txtTeleponPengirim;
     private javax.swing.JTextField txtTinggiDimensi;
     // End of variables declaration//GEN-END:variables
-   String asuransi;double hargaBarang = 0.0;
+   String asuransi;
+    double hargaBarang = 0.0;
+    DefaultTableModel dfm;
 
     void setDisable() {
         txtNamaLengkapPengirim.setEnabled(false);
@@ -1940,5 +2076,75 @@ public class HomeKurir extends javax.swing.JFrame {
         ctknamaPenerima.setText(paket.getPenerima().getNamaPenerima());
         ctkTotalBiaya.setText(df.format(paket.getTotalBiayaKirim()));
         panelCetak.setVisible(true);
+    }
+    
+    void showMasterDataTarif()
+    {
+        mstTarif = new MasterDao().getAllDataTarif();
+        dfm = new DefaultTableModel();
+        dfm.getDataVector().removeAllElements();
+        dfm.fireTableDataChanged();
+        dfm.addColumn("Provinsi");
+        dfm.addColumn("Kota");
+        dfm.addColumn("Reguler");
+        dfm.addColumn("Kilat");
+        dfm.addColumn("SDS");
+        dfm.addColumn("ONS");
+        dfm.addColumn("HDS");
+        jTable1.setModel(dfm);
+        panelMasterTarif.setVisible(true);
+        panelMasterTarif.setLocationRelativeTo(this);
+        String[] baris;
+        baris = new String[mstTarif.size()];
+
+        for (int i = 0; i < mstTarif.size(); i++) {
+            baris[0] = mstTarif.get(i).getProvinsi();
+            baris[1] = mstTarif.get(i).getKota();
+            baris[2] = "Rp "+df.format(Double.valueOf(mstTarif.get(i).getReguler()));
+            baris[3] = "Rp "+df.format(Double.valueOf(mstTarif.get(i).getKilat()));
+            baris[4] = "Rp "+df.format(Double.valueOf(mstTarif.get(i).getSds()));
+            baris[5] = "Rp "+df.format(Double.valueOf(mstTarif.get(i).getOns()));
+            baris[6] = "Rp "+df.format(Double.valueOf(mstTarif.get(i).getHds()));
+            dfm.addRow(baris);
+        }
+    }
+    void showMasterDataPaket()
+    {
+        mstPaket = new MasterDao().getAllDataPaket();
+        DefaultTableModel dfg = new DefaultTableModel();
+        dfg.getDataVector().removeAllElements();
+        dfg.fireTableDataChanged();
+        dfg.addColumn("Nama Pengirim");
+        dfg.addColumn("Alamat Pengirim");
+        dfg.addColumn("Telepon Pengirim");
+        dfg.addColumn("Nama Penerima");
+        dfg.addColumn("Alamat Pengirim");
+        dfg.addColumn("Telepon Penerima");
+        dfg.addColumn("Nomor Paket");
+        dfg.addColumn("Tanggal Kirim");
+        dfg.addColumn("Berat Barang");
+        dfg.addColumn("Jenis Layanan");
+        dfg.addColumn("Asuransi");
+        dfg.addColumn("Jenis Barang");
+        dfg.addColumn("Total Biaya");
+        tabelMasterPaket.setModel(dfg);
+        String [] bars = new String[13];
+        
+        for (int i = 0; i < mstPaket.size(); i++) {
+            bars[0] = mstPaket.get(i).getNamaPengirim();
+            bars[1] = mstPaket.get(i).getAlamatPengirim();
+            bars[2] = mstPaket.get(i).getTelpPengirim();
+            bars[3] = mstPaket.get(i).getNamaPenerima();
+            bars[4] = mstPaket.get(i).getAlamatPenerima();
+            bars[5] = mstPaket.get(i).getTelpPenerima();
+            bars[6] = mstPaket.get(i).getNoPaket();
+            bars[7] = mstPaket.get(i).getTglKirim();
+            bars[8] = mstPaket.get(i).getBeratBarang();
+            bars[9] = mstPaket.get(i).getJenisLayanan();
+            bars[10] = mstPaket.get(i).getAsuransi();
+            bars[11] = mstPaket.get(i).getJenisbrg();
+            bars[12] = mstPaket.get(i).getTotalHarga();
+            dfg.addRow(bars);
+        }
     }
 }
